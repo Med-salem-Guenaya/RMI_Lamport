@@ -50,6 +50,7 @@ public class Server implements MatrixMultiplication {
             return null;
         }
     }
+
     public static void main(String[] args) {
         try {
             // Create the Server and register it with the RMI registry
