@@ -28,8 +28,20 @@ public class CentralComputeServerImpl implements CentralComputeServer {
                 }
             }
         }
+        System.out.println("CentralComputeServer completed request for rows " + startRow + " to " + endRow);
+        printMatrix(result, "Result sent back to worker:");
 
         return result;
+    }
+
+    private void printMatrix(int[][] matrix, String message) {
+        System.out.println(message);
+        for (int[] row : matrix) {
+            for (int val : row) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
