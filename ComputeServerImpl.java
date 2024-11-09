@@ -21,7 +21,7 @@ public class ComputeServerImpl implements ComputeServer {
 
             // Increment Lamport clock and request partial multiplication from the central server
             lamportClock++;
-            System.out.println("ComputeServer" + serverId + " requesting access to compute rows " + startRow + " to " + endRow + " with Lamport clock " + lamportClock);
+            System.out.println("ComputeServer" + serverId + " requesting access to compute rows " + startRow + " to " + (endRow-1) + " with Lamport clock " + lamportClock);
             return centralServer.multiplyPartial(matrixA, matrixB, startRow, endRow);
 
         } catch (Exception e) {

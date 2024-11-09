@@ -17,6 +17,8 @@ public class CentralComputeServerImpl implements CentralComputeServer {
     public synchronized int[][] multiplyPartial(int[][] matrixA, int[][] matrixB, int startRow, int endRow) {
         // Incrémentation de l'horloge logique de Lamport
         lamportClock++;
+        System.out.println("CentralComputerServer received request with timestamp:" + lamportClock);
+
         int[][] result = new int[endRow - startRow][matrixB[0].length];
 
         // Calcul du produit partiel de matrices
@@ -28,7 +30,7 @@ public class CentralComputeServerImpl implements CentralComputeServer {
                 }
             }
         }
-        System.out.println("CentralComputeServer completed request for rows " + startRow + " to " + endRow);
+        System.out.println("CentralComputeServer completed request for rows " + startRow + " to " + (endRow-1));
         printMatrix(result, "Result sent back to worker:");
 
         return result;
