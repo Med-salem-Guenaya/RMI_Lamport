@@ -6,12 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class CentralComputeServerImpl implements CentralComputeServer {
-    private final Queue<Request> requestQueue = new PriorityQueue<>();
     private int lamportClock = 0;
-
-    public CentralComputeServerImpl() throws RemoteException {
-        super();
-    }
 
     @Override
     public synchronized int[][] multiplyPartial(int[][] matrixA, int[][] matrixB, int startRow, int endRow) {
@@ -19,6 +14,7 @@ public class CentralComputeServerImpl implements CentralComputeServer {
         lamportClock++;
         System.out.println("CentralComputerServer received request with timestamp:" + lamportClock);
 
+        // Perform matrix multiplication for the requested rows
         int[][] result = new int[endRow - startRow][matrixB[0].length];
 
         // Calcul du produit partiel de matrices
@@ -46,6 +42,12 @@ public class CentralComputeServerImpl implements CentralComputeServer {
         }
     }
 
+    @Override
+    public synchronized int getTimestamp() throws RemoteException {
+        // Return the current Lamport timestamp
+        return lamportClock;
+    }
+
     public static void main(String[] args) {
         try {
             CentralComputeServerImpl centralServer = new CentralComputeServerImpl();
@@ -57,25 +59,6 @@ public class CentralComputeServerImpl implements CentralComputeServer {
             System.out.println("CentralComputeServer is ready.");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    // Classe interne pour gérer les demandes avec horodatages
-    private class Request implements Comparable<Request> {
-        int timestamp;
-        int serverId;
-        //
-        Request(int timestamp, int serverId) {
-            this.timestamp = timestamp;
-            this.serverId = serverId;
-        }
-        //
-        @Override
-        public int compareTo(Request other) {
-            if (this.timestamp != other.timestamp) {
-                return Integer.compare(this.timestamp, other.timestamp);
-            }
-            return Integer.compare(this.serverId, other.serverId);
         }
     }
 }

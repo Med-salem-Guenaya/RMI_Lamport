@@ -15,6 +15,7 @@ public class Client {
                     {3, 4},
                     {5, 6},
                     {7, 8},
+                    {9, 10},
                     {9, 10}
             }; // Example matrix A
             int[][] matrixB = {

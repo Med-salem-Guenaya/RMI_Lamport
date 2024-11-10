@@ -19,9 +19,13 @@ public class ComputeServerImpl implements ComputeServer {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             CentralComputeServer centralServer = (CentralComputeServer) registry.lookup("CentralComputeServer");
 
-            // Increment Lamport clock and request partial multiplication from the central server
-            lamportClock++;
-            System.out.println("ComputeServer" + serverId + " requesting access to compute rows " + startRow + " to " + (endRow-1) + " with Lamport clock " + lamportClock);
+            // Request Lamport timestamp from the central server
+            int centralTimestamp = centralServer.getTimestamp();
+            lamportClock = Math.max(lamportClock, centralTimestamp) + 1; // Update Lamport clock
+
+            System.out.println("ComputeServer" + serverId + " received timestamp " + lamportClock + " from CentralServer");
+
+            // Call the central server to perform matrix multiplication
             return centralServer.multiplyPartial(matrixA, matrixB, startRow, endRow);
 
         } catch (Exception e) {
