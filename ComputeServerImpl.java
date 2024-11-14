@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class ComputeServerImpl implements ComputeServer {
     private int serverId;
     private int lamportClock;
-
+    // constructor to create instances (objects!!!) of ComputeServerImpl
     public ComputeServerImpl(int serverId) {
         this.serverId = serverId;
         this.lamportClock = 0;
