@@ -9,10 +9,12 @@ public class CentralComputeServerImpl implements CentralComputeServer {
     private int lamportClock = 0;
 
     @Override
-    public synchronized int[][] multiplyPartial(int[][] matrixA, int[][] matrixB, int startRow, int endRow) {
-        // Incrémentation de l'horloge logique de Lamport
-        lamportClock++;
-        System.out.println("CentralComputerServer received request with timestamp:" + lamportClock);
+    public synchronized int[][] multiplyPartialWithTimestamp(int[][] matrixA, int[][] matrixB, int startRow, int endRow, int workerTimestamp) throws RemoteException {
+        System.out.println("CentralComputerServer received request with timestamp:" + workerTimestamp);
+        // Synchronize the Lamport clock with the worker's timestamp
+        lamportClock = Math.max(lamportClock, workerTimestamp) + 1;
+        System.out.println("CentralComputeServer updated timestamp to: " + lamportClock);
+
 
         // Perform matrix multiplication for the requested rows
         int[][] result = new int[endRow - startRow][matrixB[0].length];

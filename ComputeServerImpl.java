@@ -26,7 +26,7 @@ public class ComputeServerImpl implements ComputeServer {
             System.out.println("ComputeServer" + serverId + " received timestamp " + lamportClock + " from CentralServer");
 
             // Call the central server to perform matrix multiplication
-            return centralServer.multiplyPartial(matrixA, matrixB, startRow, endRow);
+            return centralServer.multiplyPartialWithTimestamp(matrixA, matrixB, startRow, endRow, lamportClock);
 
         } catch (Exception e) {
             e.printStackTrace();
